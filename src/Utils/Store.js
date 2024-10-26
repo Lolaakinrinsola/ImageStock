@@ -25,7 +25,7 @@ const useStore = create((set, get) => ({
     set(() => ({
       items: [item, ...state],
       placeholders:[item, ...state]
-    }));
+    }))
     toast.success('Item added successfully!')
   },
   setLoading: (loading) => set({ loading }),

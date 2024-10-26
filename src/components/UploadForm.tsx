@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import useAuth from "../Utils/AuthStore";
 import Firestore from "../Utils/firebase";
+import { toast } from 'react-toastify';
 import Storage from "../Utils/Storage";
 import useStore from "../Utils/Store";
 import Button from "./Button";
@@ -41,6 +42,7 @@ const UploadForm = () => {
       console.error(error); // Log error for debugging
     } finally {
       setLoading(false); // Ensure loading is set to false
+      toast.success('Item added successfully!')
     }
   }
   const isDisabled = useMemo(() => {

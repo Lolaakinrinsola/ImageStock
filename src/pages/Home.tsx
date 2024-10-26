@@ -11,7 +11,7 @@ const Home = () => {
   async function settingItem() {
     setLoading(true); // Start loading
     try {
-      await Promise.all([setItem(), getUser()]); // Wait for both to finish
+      await setItem(); // Wait for both to finish
     } catch (error) {
       console.error('Error in setting items or getting user:', error);
     } finally {
@@ -22,6 +22,7 @@ const Home = () => {
     // setItem()
     // getUser()
     settingItem()
+    getUser()
   }, [])
   return (
     loading?<Spinner/>:
