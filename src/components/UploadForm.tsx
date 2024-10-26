@@ -8,28 +8,41 @@ import Card from "./Card";
 import DefaultInput from "./DefaultInput";
 
 const UploadForm = () => {
-    const {handleInputChange,state,setIscollapse,setItem}=useStore()
+  const {
+    handleInputChange,
+    state,
+    setIscollapse,
+    setItem,
+    setLoading,
+    loading,
+  } = useStore();
   const { currentUser } = useAuth();
-console.log(currentUser,'the user')
-const username= currentUser&& currentUser.displayName.split(' ').join('').toLowerCase()
-    const {writeDoc} =Firestore
-    const {uploadeFile,downloadFile} =Storage
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, files } = e.target;
-        handleInputChange(name, value, files)
-      };
-    
-      function handleSubmit(e: any) {
-        e.preventDefault();
-        uploadeFile(state).then(downloadFile).then(media =>{
-            // debugger
-            writeDoc({...state,path:media,user:username},'stocks').then(()=>{
-              setItem()
-                setIscollapse(false);
-            })
+  const username =
+    currentUser && currentUser.displayName.split(" ").join("").toLowerCase();
+  const { writeDoc } = Firestore;
+  const { uploadeFile, downloadFile } = Storage;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = e.target;
 
-        })
-      }
+    handleInputChange(name, value, files);
+  };
+  async function handleSubmit(e: any) {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const media = await uploadeFile(state);
+      const downloadURL = await downloadFile(media);
+
+      await writeDoc({ ...state, path: downloadURL, user: username }, "stocks");
+
+      setItem(); // Update items as needed
+      setIscollapse(false); // Collapse the UI if necessary
+    } catch (error: any) {
+      console.error(error); // Log error for debugging
+    } finally {
+      setLoading(false); // Ensure loading is set to false
+    }
+  }
   const isDisabled = useMemo(() => {
     return !!Object.values(state).some((input) => !input);
   }, [state]);
@@ -62,6 +75,7 @@ const username= currentUser&& currentUser.displayName.split(' ').join('').toLowe
               className="bg-green-600 text-white hover:!bg-gray-400"
               type="submit"
               disabled={isDisabled}
+              loading={loading}
             />
           </div>
         </form>

@@ -6,7 +6,8 @@ import UploadForm from "./UploadForm";
 
 const Layout = ({ children }: any) => {
   const { isCollapsed, setIscollapse } = useStore();
-  const { currentUser } = useAuth();
+  const { currentUser, logIn } = useAuth();
+
 
   return (
     <>
@@ -19,10 +20,10 @@ const Layout = ({ children }: any) => {
             text="+ Add"
             color="red-700"
             onClick={()=>setIscollapse(!isCollapsed)}
-            className="bg-green-600 text-white"
+            className="bg-green-600 text-white hover:text-black hover:border-green-600"
           />
         </div>
-    : <p className="text-orange-400 text-left w-full">Login to upload more images!</p>
+    : <p className="text-orange-400 cursor-pointer text-left w-full" onClick={()=>logIn()}>Login to upload more images to the cloud!</p>
         }
         {isCollapsed && <UploadForm />}
       </div>

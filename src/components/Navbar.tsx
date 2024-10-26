@@ -8,7 +8,7 @@ const Navbar = () => {
   const [search, setsearch] = useState('')
   
   const { currentUser, logIn, logOut } = useAuth();
-  const { filterItems,setItem} = useStore();
+  const { filterItems} = useStore();
   const navigate=useNavigate()
   const location=useLocation()
   const dropdownRef = useRef<any>(null);
@@ -55,7 +55,7 @@ function handleSubmit(e:any) {
   return (
     <div className="p-4 px-[3rem] bg-slate-300 flex justify-between items-center fixed w-full top-0" ref={dropdownRef}>
       <div className="flex items-center justify-center gap-5 text-[15px]">
-        <p className="font-bold text-[20px] cursor-pointer">Navbar</p>
+        <p className="font-bold text-[20px] cursor-pointer">Image Stock</p>
         {navItems.map((val,key)=>(
         <p className={`cursor-pointer hover:text-blue-400 hidden md:block ${location.pathname===val.link&&'text-blue-700'}`}onClick={()=>handleNavigation(val.link)} key={key}>
           {val.name}

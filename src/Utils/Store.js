@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import Firestore from "./firebase";
-
+import { toast } from 'react-toastify';
 const {readDoc} = Firestore
 const photos = [{title:'Dummy',file:'',path:'https://picsum.photos/id/1001/200/200'},
 {title:'Dummy',file:'',path:'https://picsum.photos/id/1002/200/200'},
@@ -12,6 +12,7 @@ const photos = [{title:'Dummy',file:'',path:'https://picsum.photos/id/1001/200/2
 const useStore = create((set, get) => ({
   items: photos,
   placeholders:photos,
+  loading:false,
   state: {
     title: "",
     file: null,
@@ -25,20 +26,19 @@ const useStore = create((set, get) => ({
       items: [item, ...state],
       placeholders:[item, ...state]
     }));
+    toast.success('Item added successfully!')
   },
+  setLoading: (loading) => set({ loading }),
   setItem: async() => {
     try {
-      // const state = get().state;
-      const item = get().items;
       const items=await readDoc('stock')
       console.log(items,'the itemsss')
-      // console.log(state,'the itemsss')
       set(() => ({
-        items: [...items, ...item],
-        placeholders:[...items, ...item]
+        items: items,
+        placeholders:items
       }));
     } catch (error) {
-      console.log('error reading document:',error)
+      toast.error('Error reading document:',error)
     }
     
     
