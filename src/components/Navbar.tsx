@@ -19,6 +19,7 @@ const Navbar = () => {
 function handleOnchange(e:any) {
     setsearch(e.target.value)
     filterItems(e.target.value)
+    console.log(search)
 }
 
 function handleSubmit(e:any) {
@@ -102,7 +103,7 @@ function handleSubmit(e:any) {
           <div className="grid w-full my-5 gap-2">
           {navItems.map((val,key)=>(
             <p
-              className={`cursor-pointer hover:bg-blue-400 hover:text-white border-[1px] text-center p-2 w-full rounded-lg ${location.pathname == val.link&&'bg-blue-700 text-white'}`}
+              className={`cursor-pointer hover:bg-blue-400 hover:text-white border-[1px] text-center p-2 w-full rounded-lg ${location.pathname === val.link&&'bg-blue-700 text-white'}`}
               onClick={()=>handleNavigation(val.link)}
             key={key}>
               {val.name}

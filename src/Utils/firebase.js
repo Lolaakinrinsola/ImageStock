@@ -5,7 +5,7 @@ import  { db } from '../lib/firebase.config'
 
 const Firestore={
     writeDoc:(...args)=>{
-        const [inputs, collection_name]=args
+        const [inputs]=args
         return new Promise(resolve=>{
             const randomIndex = Math.floor(Math.random() * 100000000)
             try {
