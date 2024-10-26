@@ -22,7 +22,7 @@ Make sure you have the following installed:
 1. Clone the repository:
    ```bash
    git clone https://github.com/lolaakinrinsola/ImageStock.git
-   cd image-uploader-app
+   cd imageStock
 
 ### Install the dependencies
 
