@@ -24,11 +24,20 @@ const FirebaseAuth = {
         })
       
     }, 
+    // getCurrentUser: () => {
+    //     return new Promise(resolve => {
+    //         return auth.onAuthStateChanged(resolve)
+    //     })
+    // }
     getCurrentUser: () => {
         return new Promise(resolve => {
-            return auth.onAuthStateChanged(resolve)
-        })
+            const unsubscribe = auth.onAuthStateChanged(user => {
+                resolve(user);
+                unsubscribe(); // Clean up the listener
+            });
+        });
     }
+    
 };
 
 export default FirebaseAuth;
