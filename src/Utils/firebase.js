@@ -15,7 +15,7 @@ const Firestore={
                 })
                 resolve('new Doc successfully uploaded')
             } catch (error) {
-                
+                console.log(error)
             }
         })
     },

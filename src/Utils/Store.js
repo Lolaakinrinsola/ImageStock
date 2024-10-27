@@ -32,7 +32,6 @@ const useStore = create((set, get) => ({
   setItem: async() => {
     try {
       const items=await readDoc('stock')
-      console.log(items,'the itemsss')
       set(() => ({
         items: items,
         placeholders:items
